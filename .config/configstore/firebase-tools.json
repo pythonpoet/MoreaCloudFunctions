@@ -1,0 +1,45 @@
+{
+	"analytics-uuid": "7825bea0-e1a4-489f-b477-6d916e23d8d4",
+	"motd": {
+		"cloudBuildErrorAfter": 1594252800000,
+		"cloudBuildWarnAfter": 1590019200000,
+		"defaultNode10After": 1594252800000,
+		"minVersion": "3.0.5",
+		"node8DeploysDisabledAfter": 1613390400000,
+		"node8RuntimeDisabledAfter": 1615809600000,
+		"node8WarnAfter": 1600128000000
+	},
+	"motd.fetched": 1598199326254,
+	"usage": true,
+	"user": {
+		"iss": "accounts.google.com",
+		"azp": "563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com",
+		"aud": "563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com",
+		"sub": "117738491111649900071",
+		"hd": "morea.ch",
+		"email": "production@morea.ch",
+		"email_verified": true,
+		"at_hash": "2olFoVeJgAm-8PWObGm_jQ",
+		"iat": 1598199343,
+		"exp": 1598202943
+	},
+	"tokens": {
+		"expires_at": 1598203009386,
+		"refresh_token": "1//09A5bGBhnVadMCgYIARAAGAkSNwF-L9IrC2Gyrv4SVvzR0R-u3JsW7lAMZ1W7JcxIqJ7QW5h_R9dDIJFjqzWstfuvO77f2tV9pCI",
+		"scopes": [
+			"email",
+			"https://www.googleapis.com/auth/cloud-platform",
+			"https://www.googleapis.com/auth/cloudplatformprojects.readonly",
+			"https://www.googleapis.com/auth/firebase",
+			"openid"
+		],
+		"access_token": "ya29.a0AfH6SMBMoLNMfjdo2llzeoYt-UAMTRjoIlKV2HFXyVchRrRd5EK5hCoxo37z2kEHG14HwjHxMilZiJtlw-3hfHGNn1MPYhhBXd2NOfANqYnJIVmGStcsKv2qCE8HxDvoWLaRyTyKsPA2fAkf0DznH0Is0Xl6zSK0NAbwHLlKeSE",
+		"expires_in": 3599,
+		"scope": "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/firebase openid",
+		"token_type": "Bearer",
+		"id_token": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjZiYzYzZTlmMThkNTYxYjM0ZjU2NjhmODhhZTI3ZDQ4ODc2ZDgwNzMiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNTYzNTg0MzM1ODY5LWZncmhnbWQ0N2JxbmVraWo1aThiNXByMDNobzg0OWU2LmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNTYzNTg0MzM1ODY5LWZncmhnbWQ0N2JxbmVraWo1aThiNXByMDNobzg0OWU2LmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTE3NzM4NDkxMTExNjQ5OTAwMDcxIiwiaGQiOiJtb3JlYS5jaCIsImVtYWlsIjoicHJvZHVjdGlvbkBtb3JlYS5jaCIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhdF9oYXNoIjoiN2xmeFJrMnRUUmdWUThYYmV2RE04USIsImlhdCI6MTU5ODE5OTQxMCwiZXhwIjoxNTk4MjAzMDEwfQ.EmWP7bU0HL91PbWb7Mplqen8XV72wIaFtp1Vu84IeEYP-4g9h3PkifHZMIXfrEqwkQEfdzr1oK9GXIRvfyx_Q3ORV3Xue1I18oln1o5G17B9jieWlUauDfM-AYpO2O2lIgPN_pg7cOHtksdSH8uEzgk_yR6E1tn0pIZ1JoZW3PzGgr5AXw0D5_E-UdWvlIIeN-ChOk90PI8TvOH1eKFjV6jwWAa3-xEqmSU7ZKn9m2bcLteEjjAWIPCGmfqlze1d1z2reY81Q-eo_Snk1UGAfSKmkA4WQk-Cgjq5GjbVDN1OpOAZynaSgveH2GhpnBG4_HOwgqTPNAa7dKNRNwX-Ew"
+	},
+	"activeProjects": {
+		"/home/node": "morea-8f840"
+	}
+}
