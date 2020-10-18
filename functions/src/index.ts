@@ -27,7 +27,8 @@ export const childPendRequest = functions.https.onCall(async (data:any, context:
 })
 export const parendPendAccept = functions.https.onCall(async (data:any, context: functions.https.CallableContext) => {
     const accept = new ParentPendAccept
-    return await accept.accept(data, context)
+    await accept.accept(data, context)
+    return
 })
 export const deleteUser = functions.firestore
     .document('user/{userID}')
@@ -45,7 +46,9 @@ export const uploadDevTocken = functions.https.onCall(async (data:any, context: 
     return userMap.deviceTokenUpdate(data, context)
 })
 export const updateUserProfile = functions.https.onCall(async (data:any, context: functions.https.CallableContext)=>{
+    console.log("Triggerd")
     const userMap = new UserMap
+
     return userMap.update(data, context)
 })
 
@@ -78,10 +81,6 @@ export const createChildUserMap = functions.https.onCall(async (data:any, contex
     return childusermap.create(data, context)
 })
 
-export const priviledgeEltern = functions.https.onCall(async (data:any, context: functions.https.CallableContext) => {
-    const groupMap = new GroupMap
-    return groupMap.priviledgeEltern(data, context)
-})
 export const upgradeChildMap = functions.https.onCall(async (data:any, context: functions.https.CallableContext) => {
     const userMap = new UserMap
     console.log(data)

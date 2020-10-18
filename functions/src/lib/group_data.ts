@@ -1,4 +1,4 @@
-import { groupMapHomeFeed, groupMapRoles, groupMapGroupLicence, groupMapGroupOption, groupMapUploadeByUserID, groupMapUploadedTimeStamp, groupMapParticipatingGroups, groupMapEventStartTimeStamp, groupMapEventEndTimeStamp, groupMapPriviledge, groupMapDisplayName, groupMapGroupJoinDate, groupMapPriviledgeEntryLocation, groupMapPriviledgeEntryType, groupMapGroupUpperClass, groupMapGroupLowerClass, groupMapAdminGroupMemberBrowser, groupMapEnableDisplayName, groupMapEventTeleblitzEnable, groupMapChatEnable, groupMapGroupLicenceType, groupMapGroupLienceTypePremium, groupMapGroupLienceTypeStandart, groupMapGroupLienceTypeAnarchy, userMapgroupID, groupMapgroupNickName, groupMapPriviledgeEntryName, groupMapPriviledgeEntrySeeMembers, groupMapPriviledgeEntrySeeMembersDetails, eventTeleblitzRead, eventTeleblitzEdit, eventTeleblitzAnmelden, evnetTeleblitzSeeParticipants, eventTeleblitzShare } from "../param/morea_strings"
+import { groupMapHomeFeed, groupMapRoles, groupMapGroupLicence, groupMapGroupOption, groupMapUploadeByUserID, groupMapUploadedTimeStamp, groupMapParticipatingGroups, groupMapEventStartTimeStamp, groupMapEventEndTimeStamp, groupMapDisplayName, groupMapGroupJoinDate, groupMapPriviledgeEntryLocation, groupMapPriviledgeEntryType, groupMapGroupUpperClass, groupMapGroupLowerClass, groupMapAdminGroupMemberBrowser, groupMapEnableDisplayName, groupMapEventTeleblitzEnable, groupMapChatEnable, groupMapGroupLicenceType, groupMapGroupLienceTypePremium, groupMapGroupLienceTypeStandart, groupMapGroupLienceTypeAnarchy, userMapgroupID, groupMapgroupNickName, groupMapPriviledgeEntryName, groupMapPriviledgeEntrySeeMembers, groupMapPriviledgeEntrySeeMembersDetails, eventTeleblitzRead, eventTeleblitzEdit, eventTeleblitzAnmelden, evnetTeleblitzSeeParticipants, eventTeleblitzShare } from "../param/morea_strings"
 
 enum GroupLicenceType{premium, standart, anarchy}
 
@@ -49,9 +49,9 @@ export class GroupData{
             this.groupOption = new GroupOptions(new Map(Object.entries(groupData.get(groupMapGroupOption))))
         else
             console.error("groupMapGroupOptions of groupMap has to be defined")
-        if(groupData.has(groupMapPriviledge))
-            this.priviledge = new Priviledge(new Map(Object.entries(groupData.get(groupMapPriviledge))), map, this.roles)
-        else console.error("priviledge cant be empty")
+        //if(groupData.has(groupMapPriviledge))
+         //   this.priviledge = new Priviledge(new Map(Object.entries(groupData.get(groupMapPriviledge))), map, this.roles)
+       //else console.error("priviledge cant be empty")
         if(groupData.has(groupMapgroupNickName))
             this.groupNickName = groupData.get(groupMapgroupNickName)
         else console.error("GroupNickName cant be empty")
@@ -66,7 +66,7 @@ export class GroupData{
             [groupMapGroupLicence] : this.groupLicence.pack(),
             [groupMapGroupOption] : this.groupOption.pack(),
             [groupMapHomeFeed] : this.homeFeed.pack(),
-            [groupMapPriviledge] : this.priviledge.pack(),
+            //[groupMapPriviledge] : this.priviledge.pack(),
             [groupMapRoles] : Object(obj),
             [groupMapgroupNickName]: this.groupNickName
         }
@@ -168,6 +168,7 @@ class Priviledge{
     }
     pack() : Object{
         let obj : {[key:string] : any} = {}
+        console.log("Pre-Priviledge: ",this.priviledge)
         if(this.priviledge != undefined)
             this.priviledge.forEach((entry:PriviledgeEntry, key:string) => {
                 obj[key] = Object(entry.userPack())

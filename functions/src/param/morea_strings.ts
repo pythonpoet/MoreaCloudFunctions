@@ -28,6 +28,7 @@ export const  pathAnmeldungen:string = "Anmeldungen";
 export const  pathRequest:string = "request";
 export const  pathInit:string = "init";
 export const  pathChildren:string = "children";
+export const  pathPriviledge:string = "priviledge";
 
 //Maps
 export const  mapTimestamp:string = "Timestamp";
@@ -65,9 +66,7 @@ export const  groupMapgroupNickName:string = "groupNickName";
 export const  groupMapSubgroup:string = "subgroups";
 export const  groupMapAktuellerTeleblitz:string = "AktuellerTeleblitz";
 export const  groupMapHomeFeed:string = "homeFeed";
-export const  groupMapPriviledge:string = "priviledge";
-export const  groupMapDisplayName:string = "DisplayName";
-export const  groupMapGroupJoinDate:string = "groupJoinDate";
+
 export const  groupMapUploadeByUserID:string = "uploadedByUserID";
 export const  groupMapUploadedTimeStamp:string = "uploadedTimeStamp";
 export const  groupMapParticipatingGroups:string = "participatingGroups";
@@ -87,8 +86,14 @@ export const  groupMapEventTeleblitzEnable:string = "groupMapEventTeleblitzEnabl
 export const  groupMapChatEnable:string = "groupMapChatEnable";
 export const  groupMapGroupLicencePath:string = "groupMapGroupLicencePath";
 export const  groupMapGroupLicenceDocument:string = "groupMapGroupLicenceDocument";
-export const  groupMapPriviledgeEntryType:string = "groupMapPriviledgeEntryType";
-export const  groupMapPriviledgeEntryName:string = "groupMapPriviledgeEntryName";
+
+// GroupMap -> PriviledgeEntry
+export const  groupMapPriviledgeEntryCustomInfo:string = 'customInfo';
+export const  groupMapPriviledgeEntryType:string = "roleType";
+export const  groupMapPriviledgeEntryName:string = "roleName";
+export const  groupMapDisplayName:string = "displayName";
+export const  groupMapGroupJoinDate:string = "groupJoinDate";
+
 export const  groupMapPriviledgeEntrySeeMembers:string ="groupMapPriviledgeEntrySeeMembers";
 export const  groupMapPriviledgeEntrySeeMembersDetails:string = "groupMapPriviledgeEntrySeeMembersDetails"
 export const  eventTeleblitzRead:string = "eventTeleblitzRead"
@@ -96,7 +101,7 @@ export const  eventTeleblitzShare:string = "eventTeleblitzShare"
 export const  evnetTeleblitzSeeParticipants:string = "evnetTeleblitzSeeParticipants"
 export const  eventTeleblitzAnmelden:string = "eventTeleblitzAnmelden"
 export const  eventTeleblitzEdit:string = "eventTeleblitzEdit"
-export const  groupMapPriviledgeEntryLocation:string = "groupMapPriviledgeEntryLocation";
+export const  groupMapPriviledgeEntryLocation:string = "roleLocation";
 export const  groupMapRoles:string = "roles";
 
 //eventMap

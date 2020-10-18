@@ -3,7 +3,8 @@ import * as admin from 'firebase-admin'
 import { UserMap } from './userMap';
 import { object } from 'firebase-functions/lib/providers/storage';
 import { GroupData} from '../lib/group_data'
-import { pathConfig, pathInit, pathGroups } from '../param/morea_strings';
+import { PriviledgeEntry} from '../lib/priviledge_data'
+import { pathConfig, pathInit, pathGroups, pathPriviledge } from '../param/morea_strings';
 const db = admin.firestore();
 
 export class GroupMap{
@@ -116,26 +117,18 @@ export class GroupMap{
 
 
 
-        const groupRef:FirebaseFirestore.DocumentReference = db.collection("groups").doc(groupID)
-        const configRef:FirebaseFirestore.DocumentReference = db.collection(pathConfig).doc(pathInit)
-
-        const configRaw:any = (await configRef.get()).data()
-
-        return db.runTransaction(async t =>{
-            try{
-                const groupRaw:any = (await t.get(groupRef)).data()
-                let groupData:GroupData = new GroupData(
-                    new Map(Object.entries(groupRaw)), 
-                    new Map(Object.entries(configRaw)))
-                groupData.priviledge.create("Teilnehmer", userID, "displayName", "local")
-                let obj: any = groupData.pack()
-                return t.update(groupRef, obj)
-            }
-            catch(err){
-                console.error(err)
-                return err
-            }
-        })
+        const priviledgeRef:FirebaseFirestore.DocumentReference = db.collection(pathGroups).doc(groupID).collection(pathPriviledge).doc(userID)
+        const userPriviledgeEntry = new PriviledgeEntry(undefined)
+        userPriviledgeEntry.create("Teilnehmer", "local",{}, "David")
+        try{
+            if(userPriviledgeEntry.validate())
+            await priviledgeRef.create(userPriviledgeEntry.pack())
+        }catch(e){
+            console.error("could not create PriviledgeEntry because of: ",e)
+        }
+        
+        return
+        
     }
     async deSubFromGroup(data:any, context: functions.https.CallableContext){
         const userID:string = data.UID
@@ -199,32 +192,7 @@ export class GroupMap{
         })
     }
     async priviledgeEltern(data:any, context: functions.https.CallableContext){
-        const userID:string = data.UID
-        const groupID:string = data.groupID
-        const displayName:string = data.DisplayName
-
-        const groupRef:FirebaseFirestore.DocumentReference = db.collection("groups").doc(groupID)
-
-        return db.runTransaction(t =>{
-            return t.get(groupRef).then((dSgroup)=>{
-                let groupData:any = dSgroup.data()
-                let priviledge:any
-                if(groupData !== undefined)
-                if("Priviledge" in groupData){
-                    priviledge = groupData["Priviledge"]
-                    priviledge[userID]={"DisplayName": displayName, 
-                    "Priviledge": 2}
-                }else{
-                    priviledge = {[userID]:{"DisplayName": displayName, 
-                    "Priviledge": 2}}
-                    groupData["Priviledge"] = priviledge
-                }
-                return t.update(groupRef, groupData)
-            }).catch((error)=>{
-                console.error(error)
-                return error
-            })
-        })
+        return this.createUserPriviledgeEntry(data, context);
     }
 
 }
