@@ -55,16 +55,19 @@ export class UserMap{
     async groupIDUpdate(data:any, context: functions.https.CallableContext){
         const userUID:string = data.UID
         const groupID:string = data.groupID
-    
-
         const userDocRef:FirebaseFirestore.DocumentReference = db.collection("user").doc(userUID)
         return db.runTransaction(t =>{
             return t.get(userDocRef).then((dSuserDoc)=>{
                 const userDoc:any = dSuserDoc.data()
                 let groupIDs:Array<string> = userDoc["groupIDs"]
-                groupIDs.push(groupID)
-                userDoc["groupIDs"] = groupIDs
-                return t.update(userDocRef, userDoc)
+                if(groupIDs.includes(groupID)){
+                    return null
+                }
+                else {
+                    groupIDs.push(groupID)
+                    userDoc["groupIDs"] = groupIDs
+                    return t.update(userDocRef, userDoc)
+                }
             }).catch((error)=>{
                 console.error(error)
             })
