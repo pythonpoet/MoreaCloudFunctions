@@ -9,6 +9,8 @@ import {ParentPendAccept} from './cloud_Functions/parendPendRequest'
 import { Account } from './cloud_Functions/account'
 import { UserMap } from './cloud_Functions/userMap'
 import { GroupMap} from './cloud_Functions/groupMap'
+import { PushNotificationByTeleblitzCreated } from './push_notification/teleblitz_create'
+export { PushNotificationByTeleblitzCreated } from './push_notification/teleblitz_create'
 import { ChildUserMap } from './cloud_Functions/childUserMap'
 export {ParentPendAccept} from './cloud_Functions/parendPendRequest'
 
@@ -25,7 +27,8 @@ export const childPendRequest = functions.https.onCall(async (data:any, context:
 })
 export const parendPendAccept = functions.https.onCall(async (data:any, context: functions.https.CallableContext) => {
     const accept = new ParentPendAccept
-    return await accept.accept(data, context)
+    await accept.accept(data, context)
+    return
 })
 export const deleteUser = functions.firestore
     .document('user/{userID}')
@@ -43,7 +46,9 @@ export const uploadDevTocken = functions.https.onCall(async (data:any, context: 
     return userMap.deviceTokenUpdate(data, context)
 })
 export const updateUserProfile = functions.https.onCall(async (data:any, context: functions.https.CallableContext)=>{
+    console.log("Triggerd")
     const userMap = new UserMap
+
     return userMap.update(data, context)
 })
 
@@ -53,21 +58,29 @@ export const goToNewGroup = functions.https.onCall(async (data:any, context: fun
 })
 export const priviledgeTN = functions.https.onCall(async (data:any, context: functions.https.CallableContext)=>{
     const groupMap = new GroupMap;
-    return groupMap.priviledgeTN(data, context)
+    const userMap = new UserMap
+    await userMap.groupIDUpdate(data, context)
+    return groupMap.createUserPriviledgeEntry(data, context)
 })
 export const makeLeiter = functions.https.onCall(async (data:any, context: functions.https.CallableContext)=>{
-    const groupMap = new GroupMap;
-    return groupMap.makeLeiter(data, context)
+    const userMap = new UserMap
+    return userMap.makeLeiter(data, context)
+})
+export const pushNotificationOnTeleblitzCreate = functions.firestore.
+document("groups/{groupID}").onWrite(async (change, context)=>{
+    const pushNotification = new PushNotificationByTeleblitzCreated
+    return pushNotification.groupLevelInit(change, context)
+})
+export const pushNotificationOnTeleblitzWrite = functions.firestore.
+document("events/{groupID}").onWrite(async (change, context)=>{
+    const pushNotification = new PushNotificationByTeleblitzCreated
+    return pushNotification.eventLevelInit(change)
 })
 export const createChildUserMap = functions.https.onCall(async (data:any, context: functions.https.CallableContext) => {
     const childusermap = new ChildUserMap
     return childusermap.create(data, context)
 })
 
-export const priviledgeEltern = functions.https.onCall(async (data:any, context: functions.https.CallableContext) => {
-    const groupMap = new GroupMap
-    return groupMap.priviledgeEltern(data, context)
-})
 export const upgradeChildMap = functions.https.onCall(async (data:any, context: functions.https.CallableContext) => {
     const userMap = new UserMap
     console.log(data)
@@ -104,6 +117,7 @@ export const updatePriviledge = functions.https.onCall(async (data:any, context:
         UID: data.oldUID,
         groupID: data.groupID
     }
-    await groupMap.priviledgeTN(dataupdate, context)
+    console.error("Migrate to new parameter")
+    await groupMap.createUserPriviledgeEntry(dataupdate, context)
     return groupMap.deSubFromGroup(datadesub, context)
 })

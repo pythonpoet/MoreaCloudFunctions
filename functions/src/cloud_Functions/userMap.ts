@@ -55,12 +55,15 @@ export class UserMap{
     async groupIDUpdate(data:any, context: functions.https.CallableContext){
         const userUID:string = data.UID
         const groupID:string = data.groupID
+    
 
         const userDocRef:FirebaseFirestore.DocumentReference = db.collection("user").doc(userUID)
         return db.runTransaction(t =>{
             return t.get(userDocRef).then((dSuserDoc)=>{
                 const userDoc:any = dSuserDoc.data()
-                userDoc["groupID"]= groupID
+                let groupIDs:Array<string> = userDoc["groupIDs"]
+                groupIDs.push(groupID)
+                userDoc["groupIDs"] = groupIDs
                 return t.update(userDocRef, userDoc)
             }).catch((error)=>{
                 console.error(error)
@@ -71,23 +74,25 @@ export class UserMap{
         const requestString: string = data.request
         const requestRef:FirebaseFirestore.DocumentReference = db.collection("request").doc(requestString)
         const rawRequest: any = await requestRef.get()
+
         if(rawRequest.exists){
         const requestData = rawRequest.data()
         const clientRef:FirebaseFirestore.DocumentReference =db.collection("user").doc(requestData.UID)
         requestRef.delete().catch((e) => console.error(e))
         let clientData:any
-        db.runTransaction(t=>{
+        await db.runTransaction(t=>{
             return t.get(clientRef).then((clientDoc)=>{
                 clientData = clientDoc.data()
                 clientData["Pos"] = "Leiter"
                 return t.update(clientRef, clientData)
             }).catch((err)=> console.error(err))
         }).catch((err)=> console.error(err))
-        clientData.groupID=data.groupID
+        clientData["groupID"]=data["groupID"]
         if("Pfadinamen" in clientData)
             clientData.DisplayName = clientData.Pfadinamen
         else
             clientData.DisplayName = clientData.Vorname
+
             const groupMap = new GroupMap()
             return groupMap.makeLeiter(clientData, context)
         }
