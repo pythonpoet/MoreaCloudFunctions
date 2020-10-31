@@ -56,7 +56,7 @@ export const goToNewGroup = functions.https.onCall(async (data:any, context: fun
     const groupMap = new GroupMap;
     return groupMap.goToNewGroup(data, context)
 })
-export const priviledgeTN = functions.https.onCall(async (data:any, context: functions.https.CallableContext)=>{
+export const joinGroup = functions.https.onCall(async (data:any, context: functions.https.CallableContext)=>{
     const groupMap = new GroupMap;
     const userMap = new UserMap
     await userMap.groupIDUpdate(data, context)

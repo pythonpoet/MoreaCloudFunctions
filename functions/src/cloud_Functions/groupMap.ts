@@ -4,7 +4,7 @@ import { UserMap } from './userMap';
 import { object } from 'firebase-functions/lib/providers/storage';
 import { GroupData} from '../lib/group_data'
 import { PriviledgeEntry} from '../lib/priviledge_data'
-import { pathConfig, pathInit, pathGroups, pathPriviledge } from '../param/morea_strings';
+import { pathConfig, pathInit, pathGroups, pathPriviledge, userMapUID, userMapgroupID, groupMapDisplayName, groupMapPriviledgeEntryCustomInfo } from '../param/morea_strings';
 const db = admin.firestore();
 
 export class GroupMap{
@@ -99,17 +99,12 @@ export class GroupMap{
     }
 
     async createUserPriviledgeEntry(data:any, context: functions.https.CallableContext){
-        const userID:string = data.UID
-        const groupID:string = data.groupID
-        const displayName:string = data.DisplayName
-        const location:string = data.location
-        const entryTympe:string = data.entryType
+        console.log("context userID: ", context.auth?.uid);
+        const userID:string = data[userMapUID]
+        const groupID:string = data[userMapgroupID]
+        const displayName:string = data[groupMapDisplayName]
+        const customInfo: any = data[groupMapPriviledgeEntryCustomInfo];
 
-        console.log("userID: ", userID)
-        console.log("groupID: ", groupID)
-        console.log("displayName: ", displayName)
-        console.log("location: ", location)
-        console.log("entryType: ", entryTympe)
 
         console.log("transmitted Data: ", data)
 
@@ -119,7 +114,7 @@ export class GroupMap{
 
         const priviledgeRef:FirebaseFirestore.DocumentReference = db.collection(pathGroups).doc(groupID).collection(pathPriviledge).doc(userID)
         const userPriviledgeEntry = new PriviledgeEntry(undefined)
-        userPriviledgeEntry.create("Teilnehmer", "local",{}, "David")
+        userPriviledgeEntry.create("Teilnehmer", "local", customInfo, displayName)
         try{
             if(userPriviledgeEntry.validate())
             await priviledgeRef.create(userPriviledgeEntry.pack())
