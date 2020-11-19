@@ -35,20 +35,28 @@ export class UserMap{
     async deviceTokenUpdate(data:any, context: functions.https.CallableContext){
         const clientUID: string = data.UID
         const devtoken: string = data.devtoken
+        const devID: string = data.deviceID
         let clientData: any = undefined
         do{
             clientData = (await db.collection("user").doc(clientUID).get()).data()
         }while(typeof clientData === undefined)
         
         if(!("devtoken" in clientData)){
-            clientData["devtoken"] = [devtoken]
+            clientData["devtoken"] = {[devID]: devtoken}
         }else{
-            const devtokenArray: Array<string> = clientData.devtoken
-            if(devtokenArray.includes(devtoken))
-            return
-
-            devtokenArray.push(devtoken)
-            clientData["devtoken"] = devtokenArray
+            const devtokenMap: any = clientData["devtoken"]
+            if(devID in devtokenMap){
+                if(devtokenMap[devID] === devtoken){
+                    return
+                } else {
+                    devtokenMap[devID] = devtoken
+                    clientData["devtoken"] = devtokenMap
+                }
+            }
+            else {
+                devtokenMap[devID] = devtoken
+                clientData["devtoken"] = devtokenMap
+            }
         }
         return db.collection("user").doc(clientUID).set(clientData)
     }
@@ -102,4 +110,34 @@ export class UserMap{
         console.error("request wasn't generated")
         return Promise.resolve()
     }
+
+    async deactivateDeviceNotification(
+        data: any,
+        context: functions.https.CallableContext
+      ) {
+        const uid: string = data.uid;
+        const deviceID: string = data.deviceID;
+        const ref: FirebaseFirestore.DocumentReference = db.collection("user").doc(uid);
+        db.runTransaction(t => {
+          return t
+            .get(ref)
+            .then(doc => {
+              const map = doc.data();
+              const field = doc.get("devtoken");
+              const newField: { [key: string]: any } = {};
+              for (const device of Object.keys(field)) {
+                if (device !== deviceID) {
+                  newField[device] = field[device];
+                }
+              }
+              if (map !== undefined) {
+                map["devtoken"] = newField;
+                return t.set(ref, map);
+              } else {
+                return null;
+              }
+            })
+            .catch(err => console.error(err));
+        }).catch(err => console.error(err));
+      }
 }

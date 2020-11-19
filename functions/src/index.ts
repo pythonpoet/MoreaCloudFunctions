@@ -13,83 +13,84 @@ import { PushNotificationByTeleblitzCreated } from './push_notification/teleblit
 export { PushNotificationByTeleblitzCreated } from './push_notification/teleblitz_create'
 import { ChildUserMap } from './cloud_Functions/childUserMap'
 export {ParentPendAccept} from './cloud_Functions/parendPendRequest'
+import { Messages } from "./cloud_Functions/messages"
 
-//const db = admin.firestore();
+const db = functions.region("europe-west1");
 
-export const anmeldungTeleblitz = functions.region("europe-west1").firestore.
+export const anmeldungTeleblitz = db.firestore.
 document("events/{eventID}/Anmeldungen/{anmeldeUID}").onWrite(async (change, context)=>{
     const tlbz = new Cloud_Teleblitz
     return await tlbz.initfunction(change, context)
 })
-export const childPendRequest = functions.region("europe-west1").https.onCall(async (data:any, context: functions.https.CallableContext) => {
+export const childPendRequest = db.https.onCall(async (data:any, context: functions.https.CallableContext) => {
     const request = new ChildPendRequest
     return await request.request(data, context)
 })
-export const parendPendAccept = functions.https.onCall(async (data:any, context: functions.https.CallableContext) => {
+export const parendPendAccept = db.https.onCall(async (data:any, context: functions.https.CallableContext) => {
     const accept = new ParentPendAccept
     await accept.accept(data, context)
     return
 })
-export const deleteUser = functions.firestore
+export const deleteUser = db.firestore
     .document('user/{userID}')
     .onDelete((snap, context) => {
       return admin.auth().deleteUser(snap.id)
           .then(() => console.log('Deleted user with ID:' + snap.id))
           .catch((error) => console.error('There was an error while deleting user:', error));
     });
-export const createAccount = functions.https.onCall(async (data:any, context: functions.https.CallableContext)=>{
+export const createAccount = db.https.onCall(async (data:any, context: functions.https.CallableContext)=>{
     const accont = new Account
     return accont.create(data)
 })
-export const uploadDevTocken = functions.https.onCall(async (data:any, context: functions.https.CallableContext)=>{
+export const uploadDevTocken = db.https.onCall(async (data:any, context: functions.https.CallableContext)=>{
     const userMap = new UserMap
     return userMap.deviceTokenUpdate(data, context)
 })
-export const updateUserProfile = functions.https.onCall(async (data:any, context: functions.https.CallableContext)=>{
+export const updateUserProfile = db.https.onCall(async (data:any, context: functions.https.CallableContext)=>{
     console.log("Triggerd")
     const userMap = new UserMap
 
     return userMap.update(data, context)
 })
 
-export const goToNewGroup = functions.https.onCall(async (data:any, context: functions.https.CallableContext)=>{
+export const goToNewGroup = db.https.onCall(async (data:any, context: functions.https.CallableContext)=>{
     const groupMap = new GroupMap;
     return groupMap.goToNewGroup(data, context)
 })
-export const leafeGroup = functions.https.onCall(async (data:any, context: functions.https.CallableContext)=>{
+export const leafeGroup = db.https.onCall(async (data:any, context: functions.https.CallableContext)=>{
     const groupMap = new GroupMap;
     return groupMap.deSubFromGroup(data, context)
 })
-export const joinGroup = functions.https.onCall(async (data:any, context: functions.https.CallableContext)=>{
+export const joinGroup = db.https.onCall(async (data:any, context: functions.https.CallableContext)=>{
     const groupMap = new GroupMap;
     const userMap = new UserMap
     await userMap.groupIDUpdate(data, context)
     return groupMap.createUserPriviledgeEntry(data, context)
 })
-export const updatePriviledgeEntry = functions.https.onCall(async (data:any, context: functions.https.CallableContext)=>{
+export const updatePriviledgeEntry = db.https.onCall(async (data:any, context: functions.https.CallableContext)=>{
     const groupMap = new GroupMap;
     return groupMap.createUserPriviledgeEntry(data, context)
 })
-export const makeLeiter = functions.https.onCall(async (data:any, context: functions.https.CallableContext)=>{
+export const makeLeiter = db.https.onCall(async (data:any, context: functions.https.CallableContext)=>{
     const userMap = new UserMap
     return userMap.makeLeiter(data, context)
 })
-export const pushNotificationOnTeleblitzCreate = functions.firestore.
+export const pushNotificationOnTeleblitzCreate = db.firestore.
 document("groups/{groupID}").onWrite(async (change, context)=>{
     const pushNotification = new PushNotificationByTeleblitzCreated
     return pushNotification.groupLevelInit(change, context)
 })
-export const pushNotificationOnTeleblitzWrite = functions.firestore.
+export const pushNotificationOnTeleblitzWrite = db.firestore.
 document("events/{groupID}").onWrite(async (change, context)=>{
     const pushNotification = new PushNotificationByTeleblitzCreated
     return pushNotification.eventLevelInit(change)
 })
-export const createChildUserMap = functions.https.onCall(async (data:any, context: functions.https.CallableContext) => {
+export const createChildUserMap = db.https.onCall(async (data:any, context: functions.https.CallableContext) => {
     const childusermap = new ChildUserMap
     return childusermap.create(data, context)
 })
 
-export const upgradeChildMap = functions.https.onCall(async (data:any, context: functions.https.CallableContext) => {
+export const upgradeChildMap = db.https.onCall(async (data:any, context: functions.https.CallableContext) => {
     const userMap = new UserMap
     console.log(data)
     console.log(data.elternList.length)
@@ -97,24 +98,24 @@ export const upgradeChildMap = functions.https.onCall(async (data:any, context: 
     return userMap.create(data, context)
 })
 
-export const createUserMap = functions.https.onCall(async (data: any, context: functions.https.CallableContext) => {
+export const createUserMap = db.https.onCall(async (data: any, context: functions.https.CallableContext) => {
     const userMap = new UserMap
     return userMap.create(data, context)
 })
 
-export const deleteUserMap = functions.https.onCall(async (data:any, context: functions.https.CallableContext) => {
+export const deleteUserMap = db.https.onCall(async (data:any, context: functions.https.CallableContext) => {
     const userMap = new UserMap
     const groupMap = new GroupMap
     await groupMap.deSubFromGroup(data, context)
     return userMap.delete(data, context)
 })
 
-export const deleteChildMap = functions.https.onCall(async (data:any, context: functions.https.CallableContext) => {
+export const deleteChildMap = db.https.onCall(async (data:any, context: functions.https.CallableContext) => {
     const userMap = new UserMap
     return userMap.delete(data, context)
 })
 
-export const updatePriviledge = functions.https.onCall(async (data:any, context: functions.https.CallableContext) => {
+export const updatePriviledge = db.https.onCall(async (data:any, context: functions.https.CallableContext) => {
     const groupMap = new GroupMap
     const dataupdate = {
         UID: data.UID,
@@ -129,3 +130,18 @@ export const updatePriviledge = functions.https.onCall(async (data:any, context:
     await groupMap.createUserPriviledgeEntry(dataupdate, context)
     return groupMap.deSubFromGroup(datadesub, context)
 })
+
+export const uploadAndNotifyMessage = db.https.onCall(
+    async (data: any, context: functions.https.CallableContext) => {
+        const messages = new Messages();
+        await messages.uploadMessage(data, context);
+        return messages.sendNotificationForMessage(data, context);
+    }
+)
+
+export const deactivateDeviceNotification = db.https.onCall(
+    async (data: any, context: functions.https.CallableContext) => {
+        const userMap = new UserMap();
+        return userMap.deactivateDeviceNotification(data, context);
+    }
+)
