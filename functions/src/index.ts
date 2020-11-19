@@ -56,10 +56,18 @@ export const goToNewGroup = functions.https.onCall(async (data:any, context: fun
     const groupMap = new GroupMap;
     return groupMap.goToNewGroup(data, context)
 })
+export const leafeGroup = functions.https.onCall(async (data:any, context: functions.https.CallableContext)=>{
+    const groupMap = new GroupMap;
+    return groupMap.deSubFromGroup(data, context)
+})
 export const joinGroup = functions.https.onCall(async (data:any, context: functions.https.CallableContext)=>{
     const groupMap = new GroupMap;
     const userMap = new UserMap
     await userMap.groupIDUpdate(data, context)
+    return groupMap.createUserPriviledgeEntry(data, context)
+})
+export const updatePriviledgeEntry = functions.https.onCall(async (data:any, context: functions.https.CallableContext)=>{
+    const groupMap = new GroupMap;
     return groupMap.createUserPriviledgeEntry(data, context)
 })
 export const makeLeiter = functions.https.onCall(async (data:any, context: functions.https.CallableContext)=>{

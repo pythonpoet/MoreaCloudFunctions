@@ -4,7 +4,8 @@ import { UserMap } from './userMap';
 import { object } from 'firebase-functions/lib/providers/storage';
 import { GroupData} from '../lib/group_data'
 import { PriviledgeEntry} from '../lib/priviledge_data'
-import { pathConfig, pathInit, pathGroups, pathPriviledge, userMapUID, userMapgroupID, groupMapDisplayName, groupMapPriviledgeEntryCustomInfo } from '../param/morea_strings';
+import { pathConfig, pathInit, pathGroups, pathPriviledge, userMapUID, userMapgroupID, groupMapDisplayName, groupMapPriviledgeEntryCustomInfo, groupMapPriviledgeEntryLocation } from '../param/morea_strings';
+import { user } from 'firebase-functions/lib/providers/auth';
 const db = admin.firestore();
 
 export class GroupMap{
@@ -128,23 +129,24 @@ export class GroupMap{
     async deSubFromGroup(data:any, context: functions.https.CallableContext){
         const userID:string = data.UID
         const groupID:string = data.groupID
-        const groupRef:FirebaseFirestore.DocumentReference = db.collection(pathGroups).doc(groupID)
-        const configRef:FirebaseFirestore.DocumentReference = db.collection(pathConfig).doc(pathInit)
-
-        const configRaw:any = (await configRef.get()).data()
-
-        return db.runTransaction(async t =>{
-            try{
-                const groupRaw:any = (await t.get(groupRef)).data()
-                let groupData:GroupData = new GroupData(
-                    new Map(Object.entries(groupRaw)), 
-                    new Map(Object.entries(configRaw)))
-                groupData.priviledge.delete(userID)
-                return t.update(groupRef, groupData)
-            }
-            catch(err){
-                console.error(err)
-                return err
+        const groupRef:FirebaseFirestore.DocumentReference = db.collection(pathGroups).doc(groupID).collection(pathPriviledge).doc(userID)
+        const userDocRef:FirebaseFirestore.DocumentReference = db.collection("user").doc(userID)
+        groupRef.delete
+        db.runTransaction(async t =>{
+            try {
+                const dSuserDoc = await t.get(userDocRef);
+                const userDoc: any = dSuserDoc.data();
+                let groupIDs: Array<string> = userDoc["groupIDs"];
+                const index = groupIDs.indexOf(groupID, 0);
+                if (index > -1) {
+                    groupIDs.splice(index, 1);
+                    userDoc["groupIDs"] = groupIDs;
+                    return t.update(userDocRef, userDoc);
+                } else {
+                    return console.error("groupID entry in users: ", userID, " couldn't be read (groupID: ", groupID, ")");
+                }
+            } catch (error) {
+                return console.error(error);
             }
         })
     }
