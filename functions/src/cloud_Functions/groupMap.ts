@@ -2,22 +2,20 @@ import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin'
 import { UserMap } from './userMap';
 import { object } from 'firebase-functions/lib/providers/storage';
-import { GroupData} from '../lib/group_data'
 import { PriviledgeEntry} from '../lib/priviledge_data'
-import { pathConfig, pathInit, pathGroups, pathPriviledge, userMapUID, userMapgroupID, groupMapDisplayName, groupMapPriviledgeEntryCustomInfo, groupMapPriviledgeEntryLocation } from '../param/morea_strings';
-import { user } from 'firebase-functions/lib/providers/auth';
+import { pathGroups, pathPriviledge, userMapUID, userMapgroupID, groupMapDisplayName, groupMapPriviledgeEntryCustomInfo } from '../param/morea_strings';
 const db = admin.firestore();
 
 export class GroupMap{
     async getPriviledgeUsers(groupID: string): Promise<Array<string>>{
-        var arr = new Array<string>()
+        let arr = new Array<string>()
             await db.collection("groups").doc(groupID).get().then(async snap =>{
             if(!snap.exists){
                 console.error("DevToken should not be empty --> teleblitz_create.ts")
                 return arr
             }     
             const groupData = snap.data()
-            if(groupData == undefined){
+            if(groupData === undefined){
                 console.error("groupData is undefined --> teleblitzS_create.ts")
                 return arr
             }
@@ -132,7 +130,7 @@ export class GroupMap{
         const groupRef:FirebaseFirestore.DocumentReference = db.collection(pathGroups).doc(groupID).collection(pathPriviledge).doc(userID)
         const userDocRef:FirebaseFirestore.DocumentReference = db.collection("user").doc(userID)
         groupRef.delete
-        db.runTransaction(async t =>{
+        await db.runTransaction(async t =>{
             try {
                 const dSuserDoc = await t.get(userDocRef);
                 const userDoc: any = dSuserDoc.data();
@@ -143,10 +141,12 @@ export class GroupMap{
                     userDoc["groupIDs"] = groupIDs;
                     return t.update(userDocRef, userDoc);
                 } else {
-                    return console.error("groupID entry in users: ", userID, " couldn't be read (groupID: ", groupID, ")");
+                    console.error("groupID entry in users: ", userID, " couldn't be read (groupID: ", groupID, ")");
+                    return null;
                 }
             } catch (error) {
-                return console.error(error);
+                console.error(error);
+                return null;
             }
         })
     }

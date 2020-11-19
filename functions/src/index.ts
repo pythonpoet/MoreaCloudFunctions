@@ -16,12 +16,12 @@ export {ParentPendAccept} from './cloud_Functions/parendPendRequest'
 
 //const db = admin.firestore();
 
-export const anmeldungTeleblitz = functions.firestore.
+export const anmeldungTeleblitz = functions.region("europe-west1").firestore.
 document("events/{eventID}/Anmeldungen/{anmeldeUID}").onWrite(async (change, context)=>{
     const tlbz = new Cloud_Teleblitz
     return await tlbz.initfunction(change, context)
 })
-export const childPendRequest = functions.https.onCall(async (data:any, context: functions.https.CallableContext) => {
+export const childPendRequest = functions.region("europe-west1").https.onCall(async (data:any, context: functions.https.CallableContext) => {
     const request = new ChildPendRequest
     return await request.request(data, context)
 })
@@ -119,11 +119,11 @@ export const updatePriviledge = functions.https.onCall(async (data:any, context:
     const dataupdate = {
         UID: data.UID,
         groupID: data.groupID,
-        DisplayName: data.DisplayName
+        DisplayName: data.DisplayName,
     }
     const datadesub = {
         UID: data.oldUID,
-        groupID: data.groupID
+        groupID: data.groupID,
     }
     console.error("Migrate to new parameter")
     await groupMap.createUserPriviledgeEntry(dataupdate, context)

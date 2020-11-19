@@ -81,14 +81,14 @@ export class Cloud_Teleblitz{
                         console.log("Aktivität, User: " + anmeldeUID + " " + newData.AnmeldeStatus)
                     }
                     const anmeldeHistoryUpdate = {
-                        "Anmeldung": anmeldeStamp
+                        "Anmeldung": anmeldeStamp,
                     };
                     t.update(anmeldeHistoryRef, anmeldeHistoryUpdate)
                 }else{
 
                     const anmeldeStamp: Map<String, any>[] = [newData]
                     const anmeldeHistory: any = {
-                        "Anmeldung": anmeldeStamp
+                        "Anmeldung": anmeldeStamp,
                     };
                     console.log("Aktivität, User: " + anmeldeUID + " " + newData.AnmeldeStatus)
                     t.create(anmeldeHistoryRef, anmeldeHistory)

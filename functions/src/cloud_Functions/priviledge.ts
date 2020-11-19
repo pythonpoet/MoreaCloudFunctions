@@ -1,6 +1,5 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin'
-import { DocumentReference } from '@google-cloud/firestore';
 const db = admin.firestore();
 
 export class Priviledge{
@@ -9,7 +8,7 @@ export class Priviledge{
         const childDisplayName:string = data.displayName
         const childGoupID:string = data.groupID
 
-        const groupDoc:DocumentReference = db.collection("groups").doc(childGoupID)
+        const groupDoc:FirebaseFirestore.DocumentReference = db.collection("groups").doc(childGoupID)
         return db.runTransaction(t =>{
             return t.get(groupDoc).then(doc =>{
                 if(doc.exists){
@@ -33,7 +32,7 @@ export class Priviledge{
         const childDisplayName:string = data.displayName
         const childGoupID:string = data.groupID
 
-        const groupDoc:DocumentReference = db.collection("groups").doc(childGoupID)
+        const groupDoc:FirebaseFirestore.DocumentReference = db.collection("groups").doc(childGoupID)
         return db.runTransaction(t =>{
             return t.get(groupDoc).then(doc =>{
                 t.update(groupDoc, {[childUID]:{"DisplayName": childDisplayName, "Priviledge": 3}})

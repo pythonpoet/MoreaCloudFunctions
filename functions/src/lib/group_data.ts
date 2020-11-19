@@ -68,7 +68,7 @@ export class GroupData{
             [groupMapHomeFeed] : this.homeFeed.pack(),
             //[groupMapPriviledge] : this.priviledge.pack(),
             [groupMapRoles] : Object(obj),
-            [groupMapgroupNickName]: this.groupNickName
+            [groupMapgroupNickName]: this.groupNickName,
         }
 
 
@@ -182,7 +182,7 @@ class Priviledge{
            [groupMapPriviledgeEntryName]: priviledgeEntryType,
             [groupMapPriviledgeEntryLocation] : location,
             [groupMapDisplayName]: displayName,
-            [groupMapGroupJoinDate]: [new Date().toDateString()]
+            [groupMapGroupJoinDate]: [new Date().toDateString()],
         }
         if(this.priviledge == undefined)
         console.error("Priviledge must be definded")
@@ -200,7 +200,7 @@ class Priviledge{
                 [groupMapPriviledgeEntryType]: priviledgeEntryType,
                 [groupMapPriviledgeEntryLocation] : location,
                 [groupMapDisplayName]: displayName,
-                [groupMapGroupJoinDate]: this.priviledge.get(userID)?.groupJoinDate!.push(new Date().toDateString())
+                [groupMapGroupJoinDate]: this.priviledge.get(userID)?.groupJoinDate!.push(new Date().toDateString()),
             }))
         , this.map))
         else

@@ -13,8 +13,8 @@ export class PushNotificationByTeleblitzCreated{
         const payload = {
             notification: {
                 title: messageTitle,
-                body: messageBody
-            }
+                body: messageBody,
+            },
         }
         const groupMap = new GroupMap;
         if(!(this.validate(change, context)))
@@ -34,8 +34,8 @@ export class PushNotificationByTeleblitzCreated{
                 const payload = {
                     notification: {
                         title: messageTitle,
-                        body: messageBody
-                    }
+                        body: messageBody,
+                    },
                 }
                 const groupMap = new GroupMap;
                 
@@ -71,7 +71,7 @@ export class PushNotificationByTeleblitzCreated{
         
         //type Test
         if(!(newGroupData.homeFeed instanceof Array)){
-            console.exception("homeFeed must be of type Array<string> (teleblitz_create.ts)")
+            console.error("homeFeed must be of type Array<string> (teleblitz_create.ts)")
             return false
         }else if(!(oldGroupData.homeFeed instanceof Array))
             //Trigger because it has changed
