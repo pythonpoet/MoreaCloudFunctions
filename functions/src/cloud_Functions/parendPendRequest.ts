@@ -48,7 +48,7 @@ export class ParentPendAccept {
         await this.writeChildUserData(childUserData, parentUserData);
         await this.writeParentUserData(childUserData, parentUserData);  
         const groupMap = new GroupMap
-        return groupMap.priviledgeEltern({'UID': parentUserData.UID, 'groupID': childUserData.groupID, 'DisplayName': parentUserData.Vorname}, context)
+        return groupMap.priviledgeEltern({'UID': parentUserData.UID, 'groupID': childUserData.groupIDs[0], 'DisplayName': parentUserData.Vorname}, context)
         }
         console.error("request wasn't generated")
         return Promise.resolve()
