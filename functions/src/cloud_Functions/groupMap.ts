@@ -152,12 +152,12 @@ export class GroupMap{
     }
     
     async goToNewGroup(data:any, context: functions.https.CallableContext){
-        const oldGroup:string = data.oldGroup
-        const newGroup:string = data.newGroup
+        const oldGroup:Array<string> = data.oldGroup
+        const newGroup:Array<string> = data.newGroup
         const userMap = new UserMap
-        data.groupID = oldGroup
+        data.groupID = oldGroup[0]
         await this.deSubFromGroup(data, context)
-        data.groupID = newGroup
+        data.groupID = newGroup[0]
         await userMap.groupIDUpdate(data, context)
         return this.createUserPriviledgeEntry(data, context)
     }
