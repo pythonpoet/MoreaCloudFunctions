@@ -5,10 +5,12 @@ const db = admin.firestore();
 
 export class Messages {
     async uploadMessage(data: any, context: functions.https.CallableContext) {
+        var message = data.message
+        message['timestamp'] = admin.firestore.Timestamp.now()
         return db
             .collection("messages")
             .doc()
-            .set(data.message);
+            .set(message);
     }
 
     async sendNotificationForMessage(
