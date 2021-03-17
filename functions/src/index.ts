@@ -69,6 +69,10 @@ export const joinGroup = db.https.onCall(async (data:any, context: functions.htt
 })
 export const updatePriviledgeEntry = db.https.onCall(async (data:any, context: functions.https.CallableContext)=>{
     const groupMap = new GroupMap;
+    return groupMap.updateUserPriviledgeEntry(data, context)
+})
+export const createPriviledgeEntry = db.https.onCall(async (data:any, context: functions.https.CallableContext)=>{
+    const groupMap = new GroupMap;
     return groupMap.createUserPriviledgeEntry(data, context)
 })
 export const makeLeiter = db.https.onCall(async (data:any, context: functions.https.CallableContext)=>{

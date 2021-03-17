@@ -124,6 +124,33 @@ export class GroupMap{
         return
         
     }
+    async updateUserPriviledgeEntry(data:any, context: functions.https.CallableContext){
+        console.log("context userID: ", context.auth?.uid);
+        const userID:string = data[userMapUID]
+        const groupID:string = data[userMapgroupID]
+        const displayName:string = data[groupMapDisplayName]
+        const customInfo: any = data[groupMapPriviledgeEntryCustomInfo];
+
+
+        console.log("transmitted Data: ", data)
+
+        //quick fix
+
+
+
+        const priviledgeRef:FirebaseFirestore.DocumentReference = db.collection(pathGroups).doc(groupID).collection(pathPriviledge).doc(userID)
+        const userPriviledgeEntry = new PriviledgeEntry(undefined)
+        userPriviledgeEntry.create("Teilnehmer", "local", customInfo, displayName)
+        try{
+            if(userPriviledgeEntry.validate())
+            await priviledgeRef.update(userPriviledgeEntry.pack())
+        }catch(e){
+            console.error("could not create PriviledgeEntry because of: ",e)
+        }
+        
+        return
+        
+    }
     async deSubFromGroup(data:any, context: functions.https.CallableContext){
         const userID:string = data.UID
         const groupID:string = data.groupID
@@ -139,7 +166,8 @@ export class GroupMap{
                 if (index > -1) {
                     groupIDs.splice(index, 1);
                     userDoc["groupIDs"] = groupIDs;
-                    return t.update(userDocRef, userDoc);
+                    t.update(userDocRef, userDoc);
+                    return t.delete(groupRef);
                 } else {
                     console.error("groupID entry in users: ", userID, " couldn't be read (groupID: ", groupID, ")");
                     return null;
