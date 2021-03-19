@@ -26,13 +26,6 @@ export class PushNotificationByTeleblitzCreated {
       const devToken: Array<string> = await groupMap.getChildAndHisParentsDevTokens(
         await groupMap.getPriviledgeUsers(groupID)
       );
-      console.log(
-        "Send Teleblitz message to groupID: " +
-          groupID +
-          "devtokens: " +
-          JSON.stringify(devToken)
-      );
-      console.log(devToken);
       return this.send(devToken, payload);
     } else {
       return null;
@@ -60,12 +53,6 @@ export class PushNotificationByTeleblitzCreated {
           groupIDs.forEach(async (groupID) => {
             const devToken: Array<string> = await groupMap.getChildAndHisParentsDevTokens(
               await groupMap.getPriviledgeUsers(groupID)
-            );
-            console.log(
-              "Send Teleblitz message to groupID: " +
-                groupID +
-                "devtokens: " +
-                JSON.stringify(devToken)
             );
 
             await this.send(devToken, payload);

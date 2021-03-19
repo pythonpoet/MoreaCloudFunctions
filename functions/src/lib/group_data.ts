@@ -168,7 +168,6 @@ class Priviledge{
     }
     pack() : Object{
         let obj : {[key:string] : any} = {}
-        console.log("Pre-Priviledge: ",this.priviledge)
         if(this.priviledge != undefined)
             this.priviledge.forEach((entry:PriviledgeEntry, key:string) => {
                 obj[key] = Object(entry.userPack())
@@ -191,7 +190,6 @@ class Priviledge{
                 new Map(Object.entries(obj))
             , this.roles))
         }
-        console.log("createated priviledge entry for: ", this.priviledge)
     }
     update(priviledgeEntryType:string, userID:string, displayName:string, location:string){
         if(this.priviledge != undefined)

@@ -35,7 +35,7 @@ export const deleteUser = db.firestore
     .document('user/{userID}')
     .onDelete((snap, context) => {
       return admin.auth().deleteUser(snap.id)
-          .then(() => console.log('Deleted user with ID:' + snap.id))
+          .then(() => null)
           .catch((error) => console.error('There was an error while deleting user:', error));
     });
 export const createAccount = db.https.onCall(async (data:any, context: functions.https.CallableContext)=>{
@@ -47,7 +47,6 @@ export const uploadDevTocken = db.https.onCall(async (data:any, context: functio
     return userMap.deviceTokenUpdate(data, context)
 })
 export const updateUserProfile = db.https.onCall(async (data:any, context: functions.https.CallableContext)=>{
-    console.log("Triggerd")
     const userMap = new UserMap
 
     return userMap.update(data, context)
@@ -96,8 +95,6 @@ export const createChildUserMap = db.https.onCall(async (data:any, context: func
 
 export const upgradeChildMap = db.https.onCall(async (data:any, context: functions.https.CallableContext) => {
     const userMap = new UserMap
-    console.log(data)
-    console.log(data.elternList.length)
     await userMap.updateAllParents(data, context)
     return userMap.create(data, context)
 })

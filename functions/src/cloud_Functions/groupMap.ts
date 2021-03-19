@@ -21,7 +21,7 @@ export class GroupMap{
             }
                 
             if(!("Priviledge" in groupData)){
-                console.log("Group: " + groupID + "has no Priviledge users")
+                console.warn("Group: " + groupID + "has no Priviledge users")
                 return arr
             }
                            
@@ -98,14 +98,10 @@ export class GroupMap{
     }
 
     async createUserPriviledgeEntry(data:any, context: functions.https.CallableContext){
-        console.log("context userID: ", context.auth?.uid);
         const userID:string = data[userMapUID]
         const groupID:string = data[userMapgroupID]
         const displayName:string = data[groupMapDisplayName]
         const customInfo: any = data[groupMapPriviledgeEntryCustomInfo];
-
-
-        console.log("transmitted Data: ", data)
 
         //quick fix
 
@@ -125,14 +121,10 @@ export class GroupMap{
         
     }
     async updateUserPriviledgeEntry(data:any, context: functions.https.CallableContext){
-        console.log("context userID: ", context.auth?.uid);
         const userID:string = data[userMapUID]
         const groupID:string = data[userMapgroupID]
         const displayName:string = data[groupMapDisplayName]
         const customInfo: any = data[groupMapPriviledgeEntryCustomInfo];
-
-
-        console.log("transmitted Data: ", data)
 
         //quick fix
 

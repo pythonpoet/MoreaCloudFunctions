@@ -44,7 +44,6 @@ export class ParentPendAccept {
         const childUserData: any = (await db.collection("user").doc(requestData.UID).get()).data();
         const parentUserData: any = (await db.collection("user").doc(Tdata.UID).get()).data();
         await this.deleteRequest(requestString)
-        console.log("pend parent: "+ parentUserData.UID + " and child: "+ childUserData.UID)
         await this.writeChildUserData(childUserData, parentUserData);
         await this.writeParentUserData(childUserData, parentUserData);  
         const groupMap = new GroupMap

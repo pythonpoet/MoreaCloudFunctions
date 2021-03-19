@@ -54,7 +54,6 @@ export class PriviledgeEntry{
         this.groupJoinDate!.push(new Date().toDateString())
     }
     validate():boolean{
-        console.log("this: ", this)
         if(!(groupMapPriviledgeEntryLocation in this)){
             console.warn("PriviledgeEntry needs a ", groupMapPriviledgeEntryLocation)
             return false

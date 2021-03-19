@@ -40,7 +40,7 @@ export class Cloud_Teleblitz{
     onUpdate(oldData: any, newData: any, context: functions.EventContext):Promise<any>{
         if(oldData.AnmeldeStatus !== newData.AnmeldeStatus){
             return this.signUpTeleblitzHistory(newData, context).catch((err) =>{
-                console.log("AnmeldeHistory ändern fehlgeschlagen" + err)
+                console.error("AnmeldeHistory ändern fehlgeschlagen" + err)
             })
         }else{
             console.error("Teleblitz änderung fehlgeschlagen, aufgrund gleichem AnmeldeStatus")
@@ -69,7 +69,6 @@ export class Cloud_Teleblitz{
                         const oldDate: Date = anmeldeStamp[i2].Timestamp.toDate()
                         if(newDate < oldDate){
                             anmeldeStamp.splice(i2, 0, newData)
-                            console.log("Aktivität, User: " + anmeldeUID + " " + anmeldeStamp[anmeldeStamp.length].AnmeldeStatus)
                             aenderung = true;
                             break
                         }
@@ -78,7 +77,6 @@ export class Cloud_Teleblitz{
 
                     if(aenderung === false){
                         anmeldeStamp.push(newData)
-                        console.log("Aktivität, User: " + anmeldeUID + " " + newData.AnmeldeStatus)
                     }
                     const anmeldeHistoryUpdate = {
                         "Anmeldung": anmeldeStamp,
@@ -90,7 +88,6 @@ export class Cloud_Teleblitz{
                     const anmeldeHistory: any = {
                         "Anmeldung": anmeldeStamp,
                     };
-                    console.log("Aktivität, User: " + anmeldeUID + " " + newData.AnmeldeStatus)
                     t.create(anmeldeHistoryRef, anmeldeHistory)
                 }
             }).catch(err =>{

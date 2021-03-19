@@ -9,7 +9,6 @@ export class ChildPendRequest{
         do{
             str = crypto.randomBytes(strLength).toString('hex')
         }while(await this.checkIfRequestexists(str))
-        console.log("Request String: " + str)
         return str;
     }
     async checkIfRequestexists(randomString:string):Promise<boolean>{

@@ -30,7 +30,6 @@ export class Messages {
 
             const documentList: Array<FirebaseFirestore.DocumentReference> = await group.listDocuments()
             documentList.forEach((user, idx) => {
-                console.log(user.id)
                 priviledgedList.push(user.id)
             })
 
@@ -54,7 +53,6 @@ export class Messages {
             data: { click_action: "FLUTTER_NOTIFICATION_CLICK", typeMorea: 'Message' },
             tokens: registrationTokens,
         };
-        console.log(registrationTokens);
         return admin
             .messaging()
             .sendMulticast(message)
@@ -66,7 +64,7 @@ export class Messages {
                             failedTokens.push(registrationTokens[idx]);
                         }
                     });
-                    console.log(
+                    console.error(
                         "List of tokens that caused failures: " + failedTokens
                     );
                 }
