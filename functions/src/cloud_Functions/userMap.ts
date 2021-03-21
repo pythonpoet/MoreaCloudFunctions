@@ -8,7 +8,11 @@ export class UserMap {
     return db.collection("user").doc(data.UID).create(data.content);
   }
   async update(data: any, context: functions.https.CallableContext) {
-    return db.collection("user").doc(data.UID).set(data);
+    if ((await db.collection("user").doc(data.UID).get()).exists) {
+      return db.collection("user").doc(data.UID).update(data);
+    } else {
+      return null
+    }
   }
 
   async updateAllParents(data: any, context: functions.https.CallableContext) {
