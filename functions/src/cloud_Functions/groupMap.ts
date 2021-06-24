@@ -20,12 +20,12 @@ export class GroupMap{
                 return arr
             }
                 
-            if(!("Priviledge" in groupData)){
+            if(!("priviledge" in groupData)){
                 console.warn("Group: " + groupID + "has no Priviledge users")
                 return arr
             }
                            
-            const userIDs:Array<string> = Object.keys(groupData.Priviledge)
+            const userIDs:Array<string> = Object.keys(groupData.priviledge)
             arr = userIDs
             return userIDs
         }).catch(err =>{

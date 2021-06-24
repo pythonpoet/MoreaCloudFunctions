@@ -14,6 +14,8 @@ export { PushNotificationByTeleblitzCreated } from "./push_notification/teleblit
 import { ChildUserMap } from "./cloud_Functions/childUserMap";
 export { ParentPendAccept } from "./cloud_Functions/parendPendRequest";
 import { Messages } from "./cloud_Functions/messages";
+import { pathEvents } from "./param/morea_strings";
+import { EventMap } from "./cloud_Functions/events";
 
 const db = functions.region("europe-west1");
 
@@ -194,3 +196,10 @@ export const deactivateDeviceNotification = db.https.onCall(
     return userMap.deactivateDeviceNotification(data, context);
   }
 );
+
+export const resetAnmeldungenTeleblitz = db.firestore.document(pathEvents + "/{eventID}").onUpdate(
+  async (change, context) => {
+    const eventMap = new EventMap();
+    return eventMap.deleteAnmeldungen(change, context);
+  }
+)
