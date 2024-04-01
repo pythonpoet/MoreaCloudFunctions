@@ -1,7 +1,7 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin'
 import { UserMap } from './userMap';
-import { object } from 'firebase-functions/lib/providers/storage';
+import { object } from 'firebase-functions/lib/v1/providers/storage';
 import { PriviledgeEntry} from '../lib/priviledge_data'
 import { pathGroups, pathPriviledge, userMapUID, userMapgroupID, groupMapDisplayName, groupMapPriviledgeEntryCustomInfo } from '../param/morea_strings';
 const db = admin.firestore();
@@ -148,7 +148,7 @@ export class GroupMap{
         const groupID:string = data.groupID
         const groupRef:FirebaseFirestore.DocumentReference = db.collection(pathGroups).doc(groupID).collection(pathPriviledge).doc(userID)
         const userDocRef:FirebaseFirestore.DocumentReference = db.collection("user").doc(userID)
-        groupRef.delete
+        await groupRef.delete
         await db.runTransaction(async t =>{
             try {
                 const dSuserDoc = await t.get(userDocRef);
