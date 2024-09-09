@@ -5,15 +5,11 @@ import { GroupMap } from "../cloud_Functions/groupMap";
 const notification = admin.messaging();
 
 export class PushNotificationByTeleblitzCreated {
-  async groupLevelInit(
-    change: functions.Change<FirebaseFirestore.DocumentSnapshot>,
-    context: functions.EventContext
-  ) {
+  async groupLevelInit(change: functions.Change<FirebaseFirestore.DocumentSnapshot>, context: functions.EventContext) {
     if (change.after.data()!.EventType === "Teleblitz") {
       const groupID: string = context.params.groupID;
-      const messageTitle: string = "Teleblitz";
-      const messageBody: string =
-        "Ein neuer Teleblitz wurde hochgeladen. Bitte an und abmelden";
+      const messageTitle = "Teleblitz";
+      const messageBody = "Ein neuer Teleblitz wurde hochgeladen. Bitte an und abmelden";
 
       const payload = {
         notification: {
@@ -23,25 +19,20 @@ export class PushNotificationByTeleblitzCreated {
       };
       const groupMap = new GroupMap();
       if (!this.validate(change, context)) return null;
-      const devToken: Array<string> = await groupMap.getChildAndHisParentsDevTokens(
-        await groupMap.getPriviledgeUsers(groupID)
-      );
+      const devToken: Array<string> = await groupMap.getChildAndHisParentsDevTokens(await groupMap.getPriviledgeUsers(groupID));
       return this.send(devToken, payload);
     } else {
       return null;
     }
   }
-  async eventLevelInit(
-    change: functions.Change<FirebaseFirestore.DocumentSnapshot>
-  ) {
+  async eventLevelInit(change: functions.Change<FirebaseFirestore.DocumentSnapshot>) {
     if (change.before.exists && change.after.exists) {
       if (change.after.data()!.EventType === "Teleblitz") {
         const data: any = change.after.data()!;
         if ("groupIDs" in data) {
           const groupIDs: Array<string> = data.groupIDs;
-          const messageTitle: string = "Teleblitz";
-          const messageBody: string =
-            "Der Teleblitz wurde geändert. Schaue ihn nochmals an.";
+          const messageTitle = "Teleblitz";
+          const messageBody = "Der Teleblitz wurde geändert. Schaue ihn nochmals an.";
           const payload = {
             notification: {
               title: messageTitle,
@@ -51,55 +42,53 @@ export class PushNotificationByTeleblitzCreated {
           const groupMap = new GroupMap();
 
           groupIDs.forEach(async (groupID) => {
-            const devToken: Array<string> = await groupMap.getChildAndHisParentsDevTokens(
-              await groupMap.getPriviledgeUsers(groupID)
-            );
+            const devToken: Array<string> = await groupMap.getChildAndHisParentsDevTokens(await groupMap.getPriviledgeUsers(groupID));
 
             await this.send(devToken, payload);
           });
-          return null
+          return null;
         } else {
-            return null
+          return null;
         }
       } else {
-          return null
+        return null;
       }
     } else {
-        return null
+      return null;
     }
   }
-  validate(
-    change: functions.Change<FirebaseFirestore.DocumentSnapshot>,
-    context: functions.EventContext
-  ): boolean {
+  validate(change: functions.Change<FirebaseFirestore.DocumentSnapshot>, context: functions.EventContext): boolean {
     const oldGroupData: any = change.before.data()!;
     const newGroupData: any = change.after.data()!;
 
     //homeFeed was empty and now it is empty too
-    if (!("homeFeed" in oldGroupData) && !("homeFeed" in newGroupData))
-      return false;
+    if (!("homeFeed" in oldGroupData) && !("homeFeed" in newGroupData)) return false;
 
     //homeFeed was empty and now it contains value?
-    if (!("homeFeed" in oldGroupData) && "homeFeed" in newGroupData)
-      if (newGroupData.homeFeed === undefined) return false;
-      else if (newGroupData.homeFeed instanceof Array) return true;
-      else return false;
+    if (!("homeFeed" in oldGroupData) && "homeFeed" in newGroupData) {
+      if (newGroupData.homeFeed === undefined) {
+        return false;
+      } else if (newGroupData.homeFeed instanceof Array) {
+        return true;
+      } else {
+        return false;
+      }
+    }
 
     //homeFeed existed and now it is empty
-    if ("homeFeed" in oldGroupData && !("homeFeed" in newGroupData))
-      return false;
+    if ("homeFeed" in oldGroupData && !("homeFeed" in newGroupData)) return false;
 
     //type Test
     if (!(newGroupData.homeFeed instanceof Array)) {
-      console.error(
-        "homeFeed must be of type Array<string> (teleblitz_create.ts)"
-      );
-      return false;
-    } else if (!(oldGroupData.homeFeed instanceof Array))
+      console.error("homeFeed must be of type Array<string> (teleblitz_create.ts)");
+      {
+        return false;
+      }
+    } else if (!(oldGroupData.homeFeed instanceof Array)) {
       //Trigger because it has changed
       return true;
-    //Test values of Array
-    else {
+    } else {
+      //Test values of Array
       const oldHomeFeed: Array<string> = oldGroupData.homeFeed;
       const newHomeFeed: Array<string> = newGroupData.homeFeed;
 
@@ -108,8 +97,9 @@ export class PushNotificationByTeleblitzCreated {
       else if (newHomeFeed.length === 0) return false;
       else {
         //Check if element has changed ** not dependent on order of array
-        for (let i in newHomeFeed)
+        for (const i in newHomeFeed) {
           if (!oldHomeFeed.includes(newHomeFeed[i])) return true;
+        }
       }
     }
     return false;
@@ -118,7 +108,9 @@ export class PushNotificationByTeleblitzCreated {
         I didn't included this feauture because it might be possible for this function to be triggerd before the event document is created
         */
   }
-
+  /*
+  sends Notification to Devices
+  */
   async send(devToken: Array<string>, payload: any) {
     return notification.sendToDevice(devToken, payload);
   }

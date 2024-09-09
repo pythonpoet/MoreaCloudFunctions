@@ -11,19 +11,17 @@ export class UserMap {
     if ((await db.collection("user").doc(data.UID).get()).exists) {
       return db.collection("user").doc(data.UID).update(data);
     } else {
-      return null
+      return null;
     }
   }
 
   async updateAllParents(data: any, context: functions.https.CallableContext) {
     const elternList = data.elternList;
     const oldChildUID = data.oldChildUID;
-    for (let elternUID of elternList) {
-      let elternUserMap = (
-        await db.collection("user").doc(elternUID).get()
-      ).data();
+    for (const elternUID of elternList) {
+      const elternUserMap = (await db.collection("user").doc(elternUID).get()).data();
       if (elternUserMap !== undefined) {
-        let elternKinderMap = elternUserMap["Kinder"];
+        const elternKinderMap = elternUserMap["Kinder"];
         delete elternKinderMap[oldChildUID];
         elternKinderMap[data.UID] = data.vorname;
         elternUserMap["Kinder"] = elternKinderMap;
@@ -67,15 +65,13 @@ export class UserMap {
   async groupIDUpdate(data: any, context: functions.https.CallableContext) {
     const userUID: string = data.UID;
     const groupID: string = data.groupID;
-    const userDocRef: FirebaseFirestore.DocumentReference = db
-      .collection("user")
-      .doc(userUID);
+    const userDocRef: FirebaseFirestore.DocumentReference = db.collection("user").doc(userUID);
     return db.runTransaction((t) => {
       return t
         .get(userDocRef)
         .then((dSuserDoc) => {
           const userDoc: any = dSuserDoc.data();
-          let groupIDs: Array<string> = userDoc["groupIDs"];
+          const groupIDs: Array<string> = userDoc["groupIDs"];
           if (groupIDs.includes(groupID)) {
             return null;
           } else {
@@ -91,16 +87,12 @@ export class UserMap {
   }
   async makeLeiter(data: any, context: functions.https.CallableContext) {
     const requestString: string = data.request;
-    const requestRef: FirebaseFirestore.DocumentReference = db
-      .collection("request")
-      .doc(requestString);
+    const requestRef: FirebaseFirestore.DocumentReference = db.collection("request").doc(requestString);
     const rawRequest: any = await requestRef.get();
 
     if (rawRequest.exists) {
       const requestData = rawRequest.data();
-      const clientRef: FirebaseFirestore.DocumentReference = db
-        .collection("user")
-        .doc(requestData.UID);
+      const clientRef: FirebaseFirestore.DocumentReference = db.collection("user").doc(requestData.UID);
       requestRef.delete().catch((e) => console.error(e));
       let clientData: any;
       await db
@@ -117,11 +109,7 @@ export class UserMap {
         .catch((err) => console.error(err));
       for (const groupID of clientData["groupIDs"]) {
         await db.runTransaction(async (t) => {
-          const groupRef = db
-            .collection("groups")
-            .doc(groupID)
-            .collection("priviledge")
-            .doc(requestData.UID);
+          const groupRef = db.collection("groups").doc(groupID).collection("priviledge").doc(requestData.UID);
           const groupDoc = await t.get(groupRef);
           const groupDocData = groupDoc.data()!;
           groupDocData.roleType = "Leiter";
@@ -133,15 +121,10 @@ export class UserMap {
     return Promise.resolve();
   }
 
-  async deactivateDeviceNotification(
-    data: any,
-    context: functions.https.CallableContext
-  ) {
+  async deactivateDeviceNotification(data: any, context: functions.https.CallableContext) {
     const uid: string = data.uid;
     const deviceID: string = data.deviceID;
-    const ref: FirebaseFirestore.DocumentReference = db
-      .collection("user")
-      .doc(uid);
+    const ref: FirebaseFirestore.DocumentReference = db.collection("user").doc(uid);
     db.runTransaction((t) => {
       return t
         .get(ref)

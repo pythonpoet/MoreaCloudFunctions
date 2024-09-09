@@ -1,148 +1,145 @@
 //Config
 
-export const  appVersion:string = "1";
-export const  configMapMinAppVerson:string = "minAppVersion";
-export const  configMapBlockedDevToken:string = "blockedDevTokens";
+export const appVersion = "1";
+export const configMapMinAppVerson = "minAppVersion";
+export const configMapBlockedDevToken = "blockedDevTokens";
 
 //Webflow
-export const  teleblitzapiurl:string =
-    'https://api.webflow.com/collections/5be4a9a6dbcc0a24d7cb0ee9/items?api_version=1.0.0&access_token=d9097840d357b02bd934ba7d9c52c595e6940273e940816a35062fe99e69a2de';
-export const  woelfewebflowname:string = 'Wombat (Wölfe)';
-export const  biberwebflowname:string = 'Biber';
-export const  meitliwebflowname:string = 'Nahani (Meitli)';
-export const  buebewebflowname:string = 'Drason (Buebe)';
+export const teleblitzapiurl =
+  "https://api.webflow.com/collections/5be4a9a6dbcc0a24d7cb0ee9/items?api_version=1.0.0&access_token=d9097840d357b02bd934ba7d9c52c595e6940273e940816a35062fe99e69a2de";
+export const woelfewebflowname = "Wombat (Wölfe)";
+export const biberwebflowname = "Biber";
+export const meitliwebflowname = "Nahani (Meitli)";
+export const buebewebflowname = "Drason (Buebe)";
 
 //groupID's
-export const  midatanamebiber:string = '3775';
-export const  midatanamewoelf:string = '3776';
-export const  midatanamemeitli:string = '3779';
-export const  midatanamebuebe:string = '4013';
+export const midatanamebiber = "3775";
+export const midatanamewoelf = "3776";
+export const midatanamemeitli = "3779";
+export const midatanamebuebe = "4013";
 
 //collection-paths for Firestore
-export const  pathEvents:string = "events";
-export const  pathGroups:string = "groups";
-export const  pathMessages:string = "messages";
-export const  pathUser:string = "user";
-export const  pathConfig:string = "config";
-export const  pathAnmeldungen:string = "Anmeldungen";
-export const  pathRequest:string = "request";
-export const  pathInit:string = "init";
-export const  pathChildren:string = "children";
-export const  pathPriviledge:string = "priviledge";
+export const pathEvents = "events";
+export const pathGroups = "groups";
+export const pathMessages = "messages";
+export const pathUser = "user";
+export const pathConfig = "config";
+export const pathAnmeldungen = "Anmeldungen";
+export const pathRequest = "request";
+export const pathInit = "init";
+export const pathChildren = "children";
+export const pathPriviledge = "priviledge";
 
 //Maps
-export const  mapTimestamp:string = "Timestamp";
+export const mapTimestamp = "Timestamp";
 //userMap
-export const  userMapUID:string = "UID";
-export const  userMapgroupID:string = "groupID";
-export const  userMapGroupIDs:string = "groupIDs";
-export const  userMapGroupEdditingAllow:string = "groupEdditingAllow";
-export const  userMapPfadiName:string = "Pfadinamen";
-export const  userMapNachName:string = "Nachname";
-export const  userMapVorName:string = "Vorname";
-export const  userMapPos:string = "Pos";
-export const  userMapMessagingGroups:string = "messageGroups";
-export const  userMapSubscribedGroups:string = "subscribedGroups";
-export const  userMapAlter:string = "Geburtstag";
-export const  userMapLeiter:string = "Leiter";
-export const  userMapTeilnehmer:string = "Teilnehmer";
-export const  userMapKinder:string = "Kinder";
-export const  userMapEltern:string = "Eltern";
-export const  userMapAdresse:string = "Adresse";
-export const  userMapPLZ:string = "PLZ";
-export const  userMapOrt:string = "Ort";
-export const  userMapHandynummer:string = "Handynummer";
-export const  userMapEmail:string = "Email";
-export const  userMapAccountCreated:string = "AccountCreated";
-export const  userMapDeviceToken:string = "devtoken";
-export const  userMapGeburtstag:string = "Geburtstag";
-export const  userMapAccountEdit:string = "edit";
-export const  userMapGeschlecht:string = 'Geschlecht';
-export const  userMapChildUID:string = 'childUID';
+export const userMapUID = "UID";
+export const userMapgroupID = "groupID";
+export const userMapGroupIDs = "groupIDs";
+export const userMapGroupEdditingAllow = "groupEdditingAllow";
+export const userMapPfadiName = "Pfadinamen";
+export const userMapNachName = "Nachname";
+export const userMapVorName = "Vorname";
+export const userMapPos = "Pos";
+export const userMapMessagingGroups = "messageGroups";
+export const userMapSubscribedGroups = "subscribedGroups";
+export const userMapAlter = "Geburtstag";
+export const userMapLeiter = "Leiter";
+export const userMapTeilnehmer = "Teilnehmer";
+export const userMapKinder = "Kinder";
+export const userMapEltern = "Eltern";
+export const userMapAdresse = "Adresse";
+export const userMapPLZ = "PLZ";
+export const userMapOrt = "Ort";
+export const userMapHandynummer = "Handynummer";
+export const userMapEmail = "Email";
+export const userMapAccountCreated = "AccountCreated";
+export const userMapDeviceToken = "devtoken";
+export const userMapGeburtstag = "Geburtstag";
+export const userMapAccountEdit = "edit";
+export const userMapGeschlecht = "Geschlecht";
+export const userMapChildUID = "childUID";
 
 //groupMap
-export const  groupMapEventID:string = "eventID";
-export const  groupMapgroupNickName:string = "groupNickName";
-export const  groupMapSubgroup:string = "subgroups";
-export const  groupMapAktuellerTeleblitz:string = "AktuellerTeleblitz";
-export const  groupMapHomeFeed:string = "homeFeed";
+export const groupMapEventID = "eventID";
+export const groupMapgroupNickName = "groupNickName";
+export const groupMapSubgroup = "subgroups";
+export const groupMapAktuellerTeleblitz = "AktuellerTeleblitz";
+export const groupMapHomeFeed = "homeFeed";
 
-export const  groupMapUploadeByUserID:string = "uploadedByUserID";
-export const  groupMapUploadedTimeStamp:string = "uploadedTimeStamp";
-export const  groupMapParticipatingGroups:string = "participatingGroups";
-export const  groupMapEventStartTimeStamp:string = "eventStartTimeStamp";
-export const  groupMapEventEndTimeStamp:string = "eventEndTimeStamp";
-export const  groupMapGroupOption:string = "groupOption";
-export const  groupMapGroupUpperClass:string = "groupMapGroupUpperClass";
-export const  groupMapGroupLowerClass:string = "groupMapGroupLowerClass";
-export const  groupMapGroupLicence:string = "groupLicence";
-export const  groupMapGroupLicenceType:string = "groupMapGroupLicenceType";
-export const  groupMapGroupLienceTypePremium:string = "groupMapGroupLienceTypePremium";
-export const  groupMapGroupLienceTypeStandart:string = "groupMapGroupLienceTypeStandart";
-export const  groupMapGroupLienceTypeAnarchy:string = "groupMapGroupLienceTypeAnarchy";
-export const  groupMapAdminGroupMemberBrowser:string = "groupMapAdminGroupMemberBrowser";
-export const  groupMapEnableDisplayName:string = "groupMapEnableDisplayName";
-export const  groupMapEventTeleblitzEnable:string = "groupMapEventTeleblitzEnable";
-export const  groupMapChatEnable:string = "groupMapChatEnable";
-export const  groupMapGroupLicencePath:string = "groupMapGroupLicencePath";
-export const  groupMapGroupLicenceDocument:string = "groupMapGroupLicenceDocument";
+export const groupMapUploadeByUserID = "uploadedByUserID";
+export const groupMapUploadedTimeStamp = "uploadedTimeStamp";
+export const groupMapParticipatingGroups = "participatingGroups";
+export const groupMapEventStartTimeStamp = "eventStartTimeStamp";
+export const groupMapEventEndTimeStamp = "eventEndTimeStamp";
+export const groupMapGroupOption = "groupOption";
+export const groupMapGroupUpperClass = "groupMapGroupUpperClass";
+export const groupMapGroupLowerClass = "groupMapGroupLowerClass";
+export const groupMapGroupLicence = "groupLicence";
+export const groupMapGroupLicenceType = "groupMapGroupLicenceType";
+export const groupMapGroupLienceTypePremium = "groupMapGroupLienceTypePremium";
+export const groupMapGroupLienceTypeStandart = "groupMapGroupLienceTypeStandart";
+export const groupMapGroupLienceTypeAnarchy = "groupMapGroupLienceTypeAnarchy";
+export const groupMapAdminGroupMemberBrowser = "groupMapAdminGroupMemberBrowser";
+export const groupMapEnableDisplayName = "groupMapEnableDisplayName";
+export const groupMapEventTeleblitzEnable = "groupMapEventTeleblitzEnable";
+export const groupMapChatEnable = "groupMapChatEnable";
+export const groupMapGroupLicencePath = "groupMapGroupLicencePath";
+export const groupMapGroupLicenceDocument = "groupMapGroupLicenceDocument";
 
 // GroupMap -> PriviledgeEntry
-export const  groupMapPriviledgeEntryCustomInfo:string = 'customInfo';
-export const  groupMapPriviledgeEntryType:string = "roleType";
-export const  groupMapPriviledgeEntryName:string = "roleName";
-export const  groupMapDisplayName:string = "displayName";
-export const  groupMapGroupJoinDate:string = "groupJoinDate";
+export const groupMapPriviledgeEntryCustomInfo = "customInfo";
+export const groupMapPriviledgeEntryType = "roleType";
+export const groupMapPriviledgeEntryName = "roleName";
+export const groupMapDisplayName = "displayName";
+export const groupMapGroupJoinDate = "groupJoinDate";
 
-export const  groupMapPriviledgeEntrySeeMembers:string ="groupMapPriviledgeEntrySeeMembers";
-export const  groupMapPriviledgeEntrySeeMembersDetails:string = "groupMapPriviledgeEntrySeeMembersDetails"
-export const  eventTeleblitzRead:string = "eventTeleblitzRead"
-export const  eventTeleblitzShare:string = "eventTeleblitzShare"
-export const  evnetTeleblitzSeeParticipants:string = "evnetTeleblitzSeeParticipants"
-export const  eventTeleblitzAnmelden:string = "eventTeleblitzAnmelden"
-export const  eventTeleblitzEdit:string = "eventTeleblitzEdit"
-export const  groupMapPriviledgeEntryLocation:string = "roleLocation";
-export const  groupMapRoles:string = "roles";
+export const groupMapPriviledgeEntrySeeMembers = "groupMapPriviledgeEntrySeeMembers";
+export const groupMapPriviledgeEntrySeeMembersDetails = "groupMapPriviledgeEntrySeeMembersDetails";
+export const eventTeleblitzRead = "eventTeleblitzRead";
+export const eventTeleblitzShare = "eventTeleblitzShare";
+export const evnetTeleblitzSeeParticipants = "evnetTeleblitzSeeParticipants";
+export const eventTeleblitzAnmelden = "eventTeleblitzAnmelden";
+export const eventTeleblitzEdit = "eventTeleblitzEdit";
+export const groupMapPriviledgeEntryLocation = "roleLocation";
+export const groupMapRoles = "roles";
 
 //eventMap
-export const  eventMapAnmeldeStatusNegativ:string = "ChuntNoed";
-export const  eventMapAnmeldeStatusPositiv:string = "Chunt";
-export const  eventMapAnmeldeUID:string = "AnmeldeUID";
-export const  eventMapType:string = "TeleblitzType";
+export const eventMapAnmeldeStatusNegativ = "ChuntNoed";
+export const eventMapAnmeldeStatusPositiv = "Chunt";
+export const eventMapAnmeldeUID = "AnmeldeUID";
+export const eventMapType = "TeleblitzType";
 
 //Teleblitz
-export const  tlbzMapLoading:string = "Loading";
-export const  tlbzMapNoElement:string = "noElement";
-export const  tlbzMapTeleblitzType:string = "TeleblitzType";
-export const  tlbzMapArchived:string = "_archived";
-export const  tlbzMapDraft:string = "_draft";
-export const  tlbzMapAntreten:string = "antreten";
-export const  tlbzMapAbtreten:string = "abtreten";
-export const  tlbzMapBemerkung:string = "bemerkung";
-export const  tlbzMapDatum:string = "datum";
-export const  tlbzMapEndeFerien:string = "ende-ferien";
-export const  tlbzMapFerien:string = "ferien";
-export const  tlbzMapGoogleMaps:string = "google-map";
-export const  tlbzMapGrund:string = "grund";
-export const  tlbzMapKeineAktivitaet:string = "keine-aktivitat";
-export const  tlbzMapMapAbtreten:string = "map-abtreten";
-export const  tlbzMapMitnehmenTest:string = "mitnehmen-test";
-export const  tlbzMapName:string = "name";
-export const  tlbzMapNameDesSenders:string = "name-des-senders";
-export const  tlbzMapSlug:string = "slug";
-export const  tlbzMapGroupIDs:string = "groupIDs";
-
+export const tlbzMapLoading = "Loading";
+export const tlbzMapNoElement = "noElement";
+export const tlbzMapTeleblitzType = "TeleblitzType";
+export const tlbzMapArchived = "_archived";
+export const tlbzMapDraft = "_draft";
+export const tlbzMapAntreten = "antreten";
+export const tlbzMapAbtreten = "abtreten";
+export const tlbzMapBemerkung = "bemerkung";
+export const tlbzMapDatum = "datum";
+export const tlbzMapEndeFerien = "ende-ferien";
+export const tlbzMapFerien = "ferien";
+export const tlbzMapGoogleMaps = "google-map";
+export const tlbzMapGrund = "grund";
+export const tlbzMapKeineAktivitaet = "keine-aktivitat";
+export const tlbzMapMapAbtreten = "map-abtreten";
+export const tlbzMapMitnehmenTest = "mitnehmen-test";
+export const tlbzMapName = "name";
+export const tlbzMapNameDesSenders = "name-des-senders";
+export const tlbzMapSlug = "slug";
+export const tlbzMapGroupIDs = "groupIDs";
 
 //Keys der Map der Navigation
-export const  signedOut:string = 'signedOut';
-export const  signedIn:string = 'signedIn';
-export const  toHomePage:string = 'homePage';
-export const  toMessagePage:string = 'messagePage';
-export const  toAgendaPage:string = 'agendaPage';
-export const  toProfilePage:string = 'profilePage';
+export const signedOut = "signedOut";
+export const signedIn = "signedIn";
+export const toHomePage = "homePage";
+export const toMessagePage = "messagePage";
+export const toAgendaPage = "agendaPage";
+export const toProfilePage = "profilePage";
 
 //MailChimp
-export const  urlInfoMailListMembers:string =
-    'https://us13.api.mailchimp.com/3.0/lists/54c3988cea/members/';
-export const  uIDInfoMailList:string = '54c3988cea';
-
+export const urlInfoMailListMembers = "https://us13.api.mailchimp.com/3.0/lists/54c3988cea/members/";
+export const uIDInfoMailList = "54c3988cea";
