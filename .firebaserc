@@ -1,9 +1,5 @@
 {
   "projects": {
-    "default": "dev-pfadi-morea",
-    "dev": "dev-pfadi-morea"
-  },
-  "targets": {},
-  "etags": {},
-  "dataconnectEmulatorConfig": {}
+    "default": "dev-pfadi-morea"
+  }
 }
