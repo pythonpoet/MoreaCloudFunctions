@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "dev-pfadi-morea"
-  }
+    "default": "dev-pfadi-morea",
+    "dev": "teleblitz-v1-1-test"
+  },
+  "targets": {},
+  "etags": {}
 }
